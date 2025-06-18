@@ -19,7 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'age',
+        'occupation',
+        'nationality',
         'email',
+        'role',
         'password',
     ];
 
@@ -44,5 +48,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getDashboardRoute(){
+        return match($this->role){
+            'admin' => route('admin.dashboard'),
+            'user' => route('user.dashboard'),
+            default => '/',
+        };
     }
 }
